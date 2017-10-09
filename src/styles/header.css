@@ -1,0 +1,15 @@
+.header {
+  background-color: black;
+  height: 100px;
+  line-height: 100px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 15px;
+  color: white;
+  font-size: 48px;
+}
+
+.head-container {
+  max-width: 1440px;
+  margin: 0 auto;
+}
