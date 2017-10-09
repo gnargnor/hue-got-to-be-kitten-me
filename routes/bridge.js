@@ -2,9 +2,18 @@
 
 const express = require('express');
 const router = express.Router();
+const request = require('axios');
+
+const currentInstance = request.create({
+  timeout: 10000
+});
 
 router.post('/', (req, res) => {
-  console.log('brideRequest: ', req.body.bridgeRequest);
+  let { currentIp, currentUser, method, dataObject } = req.body.bridgeRequest;
+  currentInstance.url = `http://${currentIp}/${currentUser}`;
+  currentInstance.method = method;
+  currentInstance.data = dataObject;
+  console.log('current instance: ', currentInstance);
 });
 
 router.post('/keypress', (req, res) => {

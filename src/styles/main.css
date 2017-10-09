@@ -16,10 +16,19 @@
   padding: 10px;
 }
 
+.brType {
+  margin-left: 10px;
+}
+
 .red {
   color: red;
 }
 
 .green {
   color: green;
+}
+
+.bridge-request-data {
+  height: 100px;
+  width: 300px
 }

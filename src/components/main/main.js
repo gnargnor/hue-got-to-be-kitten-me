@@ -10,6 +10,8 @@ class Main extends React.Component {
     super(props);
     this.state = {
       bridgeRequestInput: '',
+      bridgeRequestData: '',
+      method: 'get',
       lastBridgeRequest: '',
       setIpInput: '',
       currentIp: 'No IP set',
@@ -24,6 +26,7 @@ class Main extends React.Component {
     this.toggleKeyListener = this.toggleKeyListener.bind(this);
     this.keyListener = this.keyListener.bind(this);
     this.ipConfirmed = this.ipConfirmed.bind(this);
+    this.changeRequestType = this.changeRequestType.bind(this);
   }
 
   handleBridgeRequestInput (e) {
@@ -32,17 +35,35 @@ class Main extends React.Component {
     });
   }
 
+  handleBridgeRequestDataInput (e) {
+    this.setState({
+      bridgeRequestData: e.target.value
+    });
+  }
+
+  changeRequestType (e) {
+    this.setState({
+      method: e.target.value
+    });
+  }
+
   sendBridgeRequest () {
     let bridgeRequest = this.state.bridgeRequestInput;
+    if (!this.state.ipConfirmed) {
+      return;
+    }
     this.setState({
         lastBridgeRequest: bridgeRequest,
         bridgeRequestInput: ''
     });
     request({
-      method: 'post',
+      method: this.state.method,
       url: '/bridge',
       data: {
-        bridgeRequest
+        bridgeRequest,
+        currentIp: this.state.currentIp,
+        currentUser: this.state.currentUser,
+        data: this.state.brType
       }
     });
   }
@@ -80,9 +101,9 @@ class Main extends React.Component {
 
   ipConfirmed () {
     if (this.state.ipConfirmed) {
-      return '(confirmed) ';
+      return '(confirmed)'
     }
-    return '(unconfirmed) ';
+    return '(unconfirmed)';
   }
 
   toggleKeyListener (e) {
@@ -112,8 +133,18 @@ class Main extends React.Component {
           </div>
           <hr />
           <div className="bridge-request-form">
-            <span>Bridge Request:</span>
-            <input type="text" className="input bridge-request-input" value={this.state.bridgeRequestInput} onChange={this.handleBridgeRequestInput}/>
+            <h2>Bridge Request:</h2>
+            <span>URL: </span>
+            <input type="text" className="input bridge-request-input" value={this.state.bridgeRequestInput} onChange={this.handleBridgeRequestInput} />
+            <p>Type: </p>
+            <div className="requestTypeButtons" onChange={this.changeRequestType}>
+              <input name="brType" className="brType" type="radio" value="get" defaultChecked={this.state.method === 'get'}/> Get 
+              <input name="brType" className="brType" type="radio" value="post" defaultChecked={this.state.method === 'post'}/> Post 
+              <input name="brType" className="brType" type="radio" value="put" defaultChecked={this.state.method === 'put'}/> Put 
+              <input name="brType" className="brType" type="radio" value="delete" defaultChecked={this.state.method === 'delete'} /> Delete 
+            </div>
+            <p>Data: </p>
+            <textarea className="bridge-request-data" value={this.state.bridegRequestData} onChange={this.handleBridgeRequestDataInput}></textarea>
             <button className="button bridge-request-button" onClick={this.sendBridgeRequest}>Send</button>
             <p>Last Bridge Request: {this.state.lastBridgeRequest}</p>
           </div>
