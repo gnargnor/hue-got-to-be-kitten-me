@@ -12,7 +12,6 @@ class HueApp extends React.Component {
   }
 
   render() {
-    console.log('what');
     return (
       <div>
         <Header />

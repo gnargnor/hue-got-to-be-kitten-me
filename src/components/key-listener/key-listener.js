@@ -43,7 +43,7 @@ class KeyListener extends React.Component {
   render () {
     return (
       <div className="key-listener">
-        Key Listener
+        ( -- Key Listener On -- )
         <div className="key-log">
           {this.logKeys()}
         </div>

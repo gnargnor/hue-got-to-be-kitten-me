@@ -13,19 +13,19 @@ class Main extends React.Component {
       lastBridgeRequest: '',
       setIpInput: '',
       currentIp: 'No IP set',
-      keyListener: 'Off'
+      keyListener: 'Off',
+      ipConfirmed: false
     }
     this.handleBridgeRequestInput = this.handleBridgeRequestInput.bind(this);
     this.sendBridgeRequest = this.sendBridgeRequest.bind(this);
-    // this.handleKeyPress = this.handleKeyPress.bind(this);
     this.handleSetIpInput = this.handleSetIpInput.bind(this);
     this.setIp = this.setIp.bind(this);
     this.toggleKeyListener = this.toggleKeyListener.bind(this);
     this.keyListener = this.keyListener.bind(this);
+    this.ipConfirmed = this.ipConfirmed.bind(this);
   }
 
   handleBridgeRequestInput (e) {
-    console.log('BR e: ', e.target.value);
     this.setState({
       bridgeRequestInput: e.target.value
     });
@@ -47,7 +47,6 @@ class Main extends React.Component {
   }
 
   handleSetIpInput (e) {
-    console.log('IP e: ', e.target.value);
     this.setState({
       setIpInput: e.target.value
     })
@@ -61,11 +60,33 @@ class Main extends React.Component {
     });
     request({
       method: 'post',
-      url: '/bridge/setIp',
+      url: '/setup/testIp',
       data: {
         newIp
       }
     })
+    .then(response => {
+      console.log(response);
+      if (response.data.confirmed) {
+        this.setState({
+          ipConfirmed: true
+        })
+      } else {
+        this.setState({
+          ipConfirmed: false
+        })
+      }
+    })
+    .catch(err => {
+      console.log(err);
+    })
+  }
+
+  ipConfirmed () {
+    if (this.state.ipConfirmed) {
+      return '(confirmed) ';
+    }
+    return '(unconfirmed) ';
   }
 
   toggleKeyListener (e) {
@@ -81,24 +102,22 @@ class Main extends React.Component {
     return null;
   }
   
-  
-
   render () {
     return (
       <div className="main">
         <div className="container">
-          <div className="bridge-request-form">
-            <span>Bridge Request:</span>
-            <input type="text" className="input bridge-request-input" onChange={this.handleBridgeRequestInput}/>
-            <button className="button bridge-request-button" onClick={this.sendBridgeRequest}>Send</button>
-            <p>Last Bridge Request: {this.state.lastBridgeRequest}</p>
+          <div className="set-ip-form">
+            <p><span>{this.ipConfirmed()}</span>Current IP: {this.state.currentIp}</p>
+            <span>Set IP:</span>
+            <input type="text" className="input set-ip-input" value={this.state.setIpInput} onChange={this.handleSetIpInput}/>
+            <button className="button set-ip-button" onClick={this.setIp}>Submit</button>
           </div>
           <hr />
-          <div className="set-ip-form">
-            <p>Current IP: {this.state.currentIp}</p>
-            <span>Set IP:</span>
-            <input type="text" className="input set-ip-input" onChange={this.handleSetIpInput}/>
-            <button className="button set-ip-button" onClick={this.setIp}>Submit</button>
+          <div className="bridge-request-form">
+            <span>Bridge Request:</span>
+            <input type="text" className="input bridge-request-input" value={this.state.bridgeRequestInput} onChange={this.handleBridgeRequestInput}/>
+            <button className="button bridge-request-button" onClick={this.sendBridgeRequest}>Send</button>
+            <p>Last Bridge Request: {this.state.lastBridgeRequest}</p>
           </div>
           <hr />
           <div className="toggleKeyListener" onChange={this.toggleKeyListener}>
@@ -107,7 +126,6 @@ class Main extends React.Component {
             <input name="toggleKeyListener" type="radio" defaultChecked={this.state.keyListener === 'Off'} /> Off <br />
             {this.keyListener()}
           </div>
-
         </div>
       </div>
     )
