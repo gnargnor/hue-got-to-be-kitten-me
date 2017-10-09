@@ -39,7 +39,8 @@ router.post('/testIp', (req, res) => {
           res.send({
             ipCandidate,
             message: 'TIGHT DAWG',
-            confirmed: true
+            confirmed: true,
+            username: response.data[0].success.username
           })
         }
       })

@@ -13,6 +13,7 @@ class Main extends React.Component {
       lastBridgeRequest: '',
       setIpInput: '',
       currentIp: 'No IP set',
+      currentUser: 'No user exists',
       keyListener: 'Off',
       ipConfirmed: false
     }
@@ -67,15 +68,10 @@ class Main extends React.Component {
     })
     .then(response => {
       console.log(response);
-      if (response.data.confirmed) {
-        this.setState({
-          ipConfirmed: true
-        })
-      } else {
-        this.setState({
-          ipConfirmed: false
-        })
-      }
+      this.setState({
+        ipConfirmed: response.data.confirmed,
+        currentUser: response.data.username || this.state.currentUser
+      })
     })
     .catch(err => {
       console.log(err);
@@ -107,7 +103,9 @@ class Main extends React.Component {
       <div className="main">
         <div className="container">
           <div className="set-ip-form">
-            <p><span>{this.ipConfirmed()}</span>Current IP: {this.state.currentIp}</p>
+            <p className={(this.state.ipConfirmed) ? 'green' : 'red'}>{this.ipConfirmed()}</p>
+            <p>Current IP: {this.state.currentIp}</p>
+            <p>Current User: {this.state.currentUser}</p>
             <span>Set IP:</span>
             <input type="text" className="input set-ip-input" value={this.state.setIpInput} onChange={this.handleSetIpInput}/>
             <button className="button set-ip-button" onClick={this.setIp}>Submit</button>
