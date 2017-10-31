@@ -1,9 +1,8 @@
 'use strict';
 
 import React from 'react';
-import Header from './header/header';
-import Main from './main/main';
-import KeyListener from './key-listener/key-listener'
+import Header from '../components/header';
+import Main from './main';
 import '../styles/hue-app.css';
 
 class HueApp extends React.Component {

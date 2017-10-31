@@ -1,7 +1,7 @@
 'use strict';
 
 import React from 'react';
-import '../../styles/key-listener.css';
+import '../styles/key-listener.css';
 
 import io from 'socket.io-client';
 const socket = io();
@@ -12,9 +12,8 @@ class KeyListener extends React.Component {
     this.state = {
       keyLog: []
     }
-    
+    // TODO: Determine why the double colon self binding syntax doesn't work for this.handleKeypress
     this.handleKeyPress = this.handleKeyPress.bind(this);
-    this.logKeys = this.logKeys.bind(this);
   }
 
   componentWillMount () {
@@ -45,7 +44,7 @@ class KeyListener extends React.Component {
       <div className="key-listener">
         ( -- Key Listener On -- )
         <div className="key-log">
-          {this.logKeys()}
+          {::this.logKeys()}
         </div>
       </div>
     )

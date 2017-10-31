@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import HueApp from './components/hueApp';
+import HueApp from './pages/hueApp';
 import './styles/index.css';
 
 

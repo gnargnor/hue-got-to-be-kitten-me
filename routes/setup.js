@@ -31,7 +31,7 @@ router.post('/testIp', (req, res) => {
           console.log(response.data[0].error);
           res.send({
             ipCandidate,
-            message: response.data[0].error,
+            message: response.data[0].error.description,
             confirmed: false
           })
         } else if (response.data[0].success) {
