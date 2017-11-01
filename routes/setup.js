@@ -35,7 +35,8 @@ router.post('/testIp', (req, res) => {
             confirmed: false
           })
         } else if (response.data[0].success) {
-          console.log(response.data[0].success);
+          // TODO get into that db boy and store that username sis
+          // then send back the go ahead signals to pour some sugar all over our bridge
           res.send({
             ipCandidate,
             message: 'TIGHT DAWG',
@@ -44,8 +45,8 @@ router.post('/testIp', (req, res) => {
           })
         }
       })
+      // is this necessary?
     } else {
-      console.log(err);
       res.send({
         ipCandidate,
         confirmed: false

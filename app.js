@@ -1,23 +1,26 @@
 const http = require('http');
 const express = require('express');
-const app = express();
 
 // webpack
 const webpack = require('webpack');
 const config = require('./webpack.config');
 const compiler = webpack(config);
-
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 
-// 
+// need explicit recognition
 const bodyParser = require('body-parser');
 const path = require('path');
+
+// what port?
 const port = 3000;
 
 // route definitions
 const bridge = require('./routes/bridge');
 const setup = require('./routes/setup');
+
+// why not declare app when isz neccesses.. nacsi.... necessary
+const app = express();
 
 // dev hot reload middleware
 app.use(webpackDevMiddleware(compiler, {
@@ -37,7 +40,7 @@ app.get('/', function (req, res) {
   res.sendFile(path.resolve(__dirname, 'src/index.html'));
 });
 
-// server/websocket
+// server & websocket
 const server = new http.Server(app);
 const io = require('socket.io')(server);
 
