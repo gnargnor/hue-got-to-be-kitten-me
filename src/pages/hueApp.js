@@ -1,23 +1,23 @@
 'use strict';
 
 import React from 'react';
-import Header from '../components/header';
-import Main from './main';
+import { createStore } from 'redux';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import reducers from '../reducers/index';
+import Root from './Root';
 import '../styles/hue-app.css';
 
-class HueApp extends React.Component {
-  constructor(props){
-    super(props);
-  }
+const store = createStore(reducers);
 
-  render() {
-    return (
-      <div>
-        <Header />
-        <Main />
-      </div>
-    );
-  }
-}
+const HueApp = () => {
+  return (
+    <Provider store={store}>
+      <Router>
+        <Root />
+      </Router>
+    </Provider>
+  );
+};
 
 export default HueApp;

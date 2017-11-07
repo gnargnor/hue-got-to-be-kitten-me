@@ -36,7 +36,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 // routing
 app.use('/bridge', bridge);
 app.use('/setup', setup);
-app.get('/', function (req, res) {
+app.get('/*', function (req, res) {
   res.sendFile(path.resolve(__dirname, 'src/index.html'));
 });
 

@@ -2,8 +2,10 @@
 
 import React from 'react';
 import '../styles/main.css';
-import KeyListener from './key-listener';
-import BridgeRequestForm from './bridge-request';
+import KeyListener from './KeyListener';
+import BridgeRequest from './BridgeRequest';
+import { Route } from 'react-router-dom';
+import Home from './Home';
 import request from 'axios';
 
 class Main extends React.Component {
@@ -27,13 +29,14 @@ class Main extends React.Component {
   }
 
   componentDidMount () {
-    console.log('the component mounted baby');
+    // makes a request to find a bridge on the local network
     let config = {
       method: 'get',
       url: 'https://www.meethue.com/api/nupnp',
     };
     request(config)
       .then(resp => {
+        // it would be nice to toggle a modal that prompts pressing the link button on the bridge
         console.log(resp);
         console.log(typeof resp.data);
         console.log(resp.data[0].internalipaddress);
@@ -66,6 +69,7 @@ class Main extends React.Component {
       });
   }
 
+  // might be nice to bring in a form component for inputs
   handleSetIpInput (e) {
     this.setState({
       setIpInput: e.target.value
@@ -132,6 +136,9 @@ class Main extends React.Component {
     return (
       <div className="main">
         <div className="container">
+          <div>
+            <Route exact path='/' component={Home} />
+          </div>
           <div className="set-ip-form">
             <h3 className={(this.state.ipConfirmed) ? 'green' : 'red'}>{::this.ipConfirmed()}</h3>
             {this.ipErrorMessage()}
@@ -147,7 +154,7 @@ class Main extends React.Component {
             <button className="button set-ip-button" onClick={::this.setIp}>Submit</button>
           </div>
           <hr />
-          <BridgeRequestForm currentUser={this.state.ipConfirmed ? this.state.currentUser : '***confirm user***'} currentIp={(this.state.ipConfirmed ? this.state.currentIp : '***confirm ip***')} ipConfirmed={this.state.ipConfirmed}/>
+          <BridgeRequest currentUser={this.state.ipConfirmed ? this.state.currentUser : '***confirm user***'} currentIp={(this.state.ipConfirmed ? this.state.currentIp : '***confirm ip***')} ipConfirmed={this.state.ipConfirmed}/>
           <hr />
           <div className="toggleKeyListener" onChange={::this.toggleKeyListener}>
             <p>Key Listener:</p>

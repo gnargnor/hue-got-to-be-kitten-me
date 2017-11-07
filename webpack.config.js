@@ -5,7 +5,7 @@ module.exports = {
   entry: [
     'eventsource-polyfill',
     'webpack-hot-middleware/client?reload=true',
-    path.resolve(__dirname, './src/index.js')
+    path.resolve(__dirname, './src/app.js')
   ],
   devtool: 'inline-source-map',
   plugins: [

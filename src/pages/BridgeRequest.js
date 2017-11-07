@@ -4,7 +4,7 @@ import React from 'react';
 import request from 'axios';
 import '../styles/bridge-request.css';
 
-class BridgeRequestForm extends React.Component {
+class BridgeRequest extends React.Component {
   constructor(props) {
     super(props);
     console.log(this.props);
@@ -122,4 +122,4 @@ class BridgeRequestForm extends React.Component {
   }
 }
 
-export default BridgeRequestForm;
+export default BridgeRequest;
