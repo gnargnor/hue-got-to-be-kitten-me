@@ -84,7 +84,7 @@ class Main extends React.Component {
       <div className="main">
         <div className="container">
           <div className="toggleKeyListener" onChange={::this.toggleKeyListener}>
-            <label>Key Listener:</label>
+            <label style={{marginRight: 10}}>Key Listener:</label>
             <input name="toggleKeyListener" type="radio" defaultChecked={this.state.keyListener === 'On'} /> On
             <input name="toggleKeyListener" type="radio" defaultChecked={this.state.keyListener === 'Off'} /> Off
             {::this.keyListener()}
@@ -92,6 +92,7 @@ class Main extends React.Component {
           <hr />
           <div>
             <ul>
+              <li><a href='/'>Fuck You</a></li>
               <li><a href='/SetIp'>Set Ip</a></li>
               <li><a href='/BridgeRequest'>Bridge Request</a></li>
             </ul>
