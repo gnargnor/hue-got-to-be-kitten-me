@@ -4,7 +4,8 @@ import React from 'react';
 import '../styles/main.css';
 import KeyListener from './KeyListener';
 import BridgeRequest from './BridgeRequest';
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
+import RouteHouse from '../components/RouteHouse';
 import Home from './Home';
 import SetIp from './SetIp';
 import request from 'axios';
@@ -96,9 +97,11 @@ class Main extends React.Component {
             </ul>
           </div>
           <div>
-            <Route exact path='/' component={Home} />
-            <Route exact path='/SetIp' component={SetIp} />
-            <Route exact path='/BridgeRequest' component={BridgeRequest} />
+            <Switch>
+              <RouteHouse exact path='/' component={Home} />
+              <RouteHouse exact path='/SetIp' component={SetIp} />
+              <RouteHouse exact path='/BridgeRequest' component={BridgeRequest} />
+            </Switch>
           </div>
         </div>
       </div>
